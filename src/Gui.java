@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class Gui{
     private JFrame baseFrame;
@@ -12,7 +13,9 @@ public class Gui{
     private JTextField textfield01;
     private GridLayout basicLayout, layout_bFL_text03;
     private JButton button01;
-    public int objChecker = 0;
+    public static int topicSelector = 0;
+    public static int quesionSelector = 0;
+
 
     public boolean btopic1, btopic2, btopic3, bchoice1, bchoice2;
     public Gui() {
@@ -73,7 +76,7 @@ public class Gui{
             bFrameLabel.setVisible(true);
 
 
-        // basepPanel settings
+        // basePanel settings
             mainPanel.setBorder(emptyborderx20);
             mainPanel.setVisible(true);
             mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -113,53 +116,60 @@ public class Gui{
             choice01.addActionListener(this::actionPerformed);
             choice02.addActionListener(this::actionPerformed);
 
+
+    }
+    public void integerOnlyJText(KeyEvent event) {
+        char c = event.getKeyChar();
+        if (Character.isLetter(c)) {
+            textfield01.setEditable(false);
+        } else textfield01.setEditable(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == topic01) {
             if (!btopic1) {
                 btopic1 = true;
-                objChecker++;
+                topicSelector++;
             } else {
                 btopic1 = false;
-                objChecker--;
+                topicSelector--;
             }
         } else if (e.getSource() == topic02) {
             if (!btopic2) {
                 btopic2 = true;
-                objChecker++;
+                topicSelector++;
             } else {
                 btopic2 = false;
-                objChecker--;
+                topicSelector--;
             }
         } else if (e.getSource() == topic03) {
             if (!btopic3) {
                 btopic3 = true;
-                objChecker++;
+                topicSelector++;
             } else {
                 btopic3 = false;
-                objChecker--;
+                topicSelector--;
             }
         } else if (e.getSource() == choice01) {
             if (!bchoice1) {
                 bchoice1 = true;
-                objChecker++;
+                quesionSelector++;
             } else {
                 bchoice1 = false;
-                objChecker--;
+                quesionSelector--;
             }
         } else if (e.getSource() == choice02) {
             if (!bchoice2) {
                 bchoice2 = true;
-                objChecker++;
+                quesionSelector++;
             } else {
                 bchoice2 = false;
-                objChecker--;
+                quesionSelector--;
             }
         }
-        if (e.getSource() == button01 && objChecker == 0) {
+        if (e.getSource() == button01 && (topicSelector == 0 || quesionSelector == 0)) {
             new Gui_ErrorInterface();
-        } else if (e.getSource() == button01 && objChecker != 0) {
+        } else if (e.getSource() == button01 && topicSelector != 0 && quesionSelector != 0) {
             new Gui_SuccessInterface();
         }
     }
